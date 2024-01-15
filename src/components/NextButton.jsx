@@ -1,24 +1,23 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable no-unused-vars */
+
 import React from "react";
 
-const NextButton = ({ dispatch, index, numOfQuestions }) => {
+import { useQuiz } from "../contexts/QuizContext";
+
+const NextButton = () => {
+  const { index, numOfQuestions, endQuiz, handleNextQuiz } = useQuiz();
+
   if (index === numOfQuestions - 1) {
     return (
-      <button
-        className='btn btn-ui'
-        onClick={() => dispatch({ type: "FINISH" })}
-      >
+      <button className='btn btn-ui' onClick={endQuiz}>
         Finish
       </button>
     );
   }
 
   return (
-    <button
-      className='btn btn-ui'
-      onClick={() => dispatch({ type: "NEXT_QUESTION" })}
-    >
+    <button className='btn btn-ui' onClick={handleNextQuiz}>
       Next
     </button>
   );

@@ -1,16 +1,15 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable no-unused-vars */
+
 import React from "react";
+import { useQuiz } from "../contexts/QuizContext";
 
 let emoji;
 
-const FinishScreen = ({
-  points,
-  totalPoints,
-  highscore,
-  dispatch,
-  secondsRemaining,
-}) => {
+const FinishScreen = () => {
+  const { points, totalPoints, highscore, secondsRemaining, resetQuiz } =
+    useQuiz();
+
   const percentage = Math.ceil((points / totalPoints) * 100);
 
   if (percentage === 100) emoji = "🥇";
@@ -30,10 +29,7 @@ const FinishScreen = ({
         <strong>{totalPoints}</strong> ({percentage}%)
       </p>
       <p className='highscore'>(Highscore: {highscore} points)</p>
-      <button
-        className='btn btn-ui'
-        onClick={() => dispatch({ type: "RESET_QUIZ" })}
-      >
+      <button className='btn btn-ui' onClick={resetQuiz}>
         Restart Quiz
       </button>
     </>

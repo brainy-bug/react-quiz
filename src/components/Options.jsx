@@ -1,8 +1,10 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
 import React from "react";
+import { useQuiz } from "../contexts/QuizContext";
 
-const Options = ({ options, correctOption, dispatch, answer }) => {
+const Options = ({ options, correctOption }) => {
+  const { handleAnswer, answer } = useQuiz();
   const hasAnswered = answer !== null;
 
   const getAnswerStatus = (index) => {
@@ -21,17 +23,19 @@ const Options = ({ options, correctOption, dispatch, answer }) => {
 
   return (
     <div className='options'>
-      {options.map((option, index) => (
-        <button
-          key={option}
-          className={`btn btn-option ${getAnswerStatus(index)}`}
-          disabled={hasAnswered}
-          onClick={() => dispatch({ type: "ANSWER", payload: index })}
-        >
-          {option}{" "}
-          {index === answer ? (index === correctOption ? "✔" : "✖") : ""}
-        </button>
-      ))}
+      {options?.map((option, index) => {
+        return (
+          <button
+            key={option}
+            className={`btn btn-option ${getAnswerStatus(index)}`}
+            disabled={hasAnswered}
+            onClick={() => handleAnswer(index)}
+          >
+            {option}{" "}
+            {index === answer ? (index === correctOption ? "✔" : "✖") : ""}
+          </button>
+        );
+      })}
     </div>
   );
 };
